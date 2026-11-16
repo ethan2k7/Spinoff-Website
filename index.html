@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spinoff</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%8E%B2%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f2efe6; --ink:#1d2b3a; --muted:#6b7785; --btn:#2f5bd8; --btn-ink:#ffffff;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#14181f;--ink:#eef1f5;--muted:#8d98a6;--btn:#6d8cff;--btn-ink:#0e1320}
+}
+:root[data-theme="dark"]{--bg:#14181f;--ink:#eef1f5;--muted:#8d98a6;--btn:#6d8cff;--btn-ink:#0e1320}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;justify-content:center}
+main{display:flex;flex-direction:column;align-items:center;gap:1.1rem;padding:1.5rem;text-align:center;width:100%;max-width:44rem}
+.company{font-size:clamp(2.4rem,9vw,5rem);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin:0;overflow-wrap:anywhere}
+.for{font-size:clamp(1rem,3vw,1.4rem);color:var(--muted);margin:0;font-style:italic}
+.hobby{font-size:clamp(1.6rem,6vw,3rem);font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:0;overflow-wrap:anywhere}
+button{margin-top:1.2rem;font:inherit;font-size:1.3rem;font-weight:600;background:var(--btn);color:var(--btn-ink);border:0;border-radius:999px;padding:.9rem 3rem;cursor:pointer;transition:transform .1s}
+button:active{transform:scale(.96)}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+body{align-items:flex-start;justify-content:center;overflow-y:auto}
+main{margin:auto;padding-top:5rem}
+nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:calc(env(safe-area-inset-top,0px) + .8rem) 1rem .8rem;background:var(--bg);z-index:5}
+.tab{margin:0;font-size:1rem;font-weight:600;padding:.55rem 1.2rem;background:transparent;color:var(--muted);border:2px solid transparent}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
+.save{margin-top:0;font-size:1.05rem;padding:.65rem 2rem;background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.save:disabled{opacity:.55;cursor:default}
+[hidden]{display:none!important}
+.view{display:flex;flex-direction:column;align-items:center;gap:1.1rem;width:100%}
+ul.list{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:.7rem}
+ul.list li{display:flex;align-items:center;justify-content:space-between;gap:1rem;text-align:left;padding:.9rem 1.1rem;border:2px solid var(--muted);border-radius:1rem;font-size:1.2rem;font-weight:600;overflow-wrap:anywhere}
+.rm{margin:0;font-size:.9rem;padding:.4rem .9rem;background:transparent;color:var(--muted);border:2px solid var(--muted);flex:none}
+.empty{color:var(--muted);margin:0;font-size:1.1rem}
+.brand{font-size:1.4rem;font-weight:700;letter-spacing:-.03em}
+.tabs{display:flex;gap:.25rem}
+@keyframes tick{from{transform:translateY(-40%);opacity:.35}to{transform:none;opacity:1}}
+@keyframes land{0%{transform:translateY(-22%);opacity:.5}55%{transform:translateY(7%);opacity:1}100%{transform:none}}
+.spinning{animation:tick .075s linear infinite;filter:blur(1.5px)}
+.land{animation:land .3s ease-out}
+#roll:disabled{opacity:.7;cursor:default}
+main{padding-bottom:4.5rem}
+.gear{position:fixed;left:1rem;bottom:calc(env(safe-area-inset-bottom,0px) + 1rem);margin:0;width:2.6rem;height:2.6rem;padding:0;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--muted);border:2px solid var(--muted);border-radius:50%;z-index:5}
+.gear svg{width:1.3rem;height:1.3rem}
+.gear[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.settings{align-items:stretch;text-align:left;gap:2rem}
+.group{display:flex;flex-direction:column;gap:.8rem}
+.gh{margin:0;font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
+.gc{color:var(--muted);font-weight:400;font-size:1rem}
+.hint{margin:0;color:var(--muted);font-size:.95rem}
+.hint:empty{display:none}
+.add:disabled{opacity:.45;cursor:default}
+.addrow{display:flex;gap:.5rem}
+.addrow input{flex:1;min-width:0;font:inherit;font-size:1rem;padding:.6rem .9rem;border-radius:999px;border:2px solid var(--muted);background:transparent;color:var(--ink)}
+.addrow input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.add{margin:0;font-size:1rem;padding:.6rem 1.4rem}
+ul.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem;max-height:13rem;overflow-y:auto}
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .4rem .3rem .8rem;border:2px solid var(--muted);border-radius:999px;font-size:.95rem}
+.chip button{margin:0;padding:0;width:1.4rem;height:1.4rem;line-height:1;font-size:1rem;background:transparent;color:var(--muted);border:0}
+.chip button:disabled{opacity:.3;cursor:default}
+.reset{align-self:flex-start;margin:0;font-size:.95rem;padding:.45rem 1.1rem;background:transparent;color:var(--muted);border:2px solid var(--muted)}
+@media (prefers-reduced-motion:reduce){.spinning,.land{animation:none;filter:none}}
+@media (max-width:480px){.tab{padding:.4rem .5rem;font-size:.85rem}.tabs{gap:0}.brand{font-size:1.05rem}}
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Spinoff</span>
+  <div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="tab-roll" aria-selected="true" type="button">Roll</button>
+  <button class="tab" role="tab" id="tab-saved" aria-selected="false" type="button">Saved Ideas (<span id="count">0</span>)</button>
+  </div>
+</nav>
+<button class="gear" id="tab-settings" type="button" aria-label="Settings" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+<main>
+  <section class="view" id="view-roll">
+    <h1 class="company" id="company">Company</h1>
+    <p class="for">for</p>
+    <p class="hobby" id="hobby">hobby or activity</p>
+    <button id="roll" type="button">Roll</button>
+    <button class="save" id="save" type="button">Save</button>
+  </section>
+  <section class="view" id="view-saved" hidden>
+    <ul class="list" id="list"></ul>
+    <p class="empty" id="empty">Nothing saved yet. Roll, then hit Save to keep an idea.</p>
+  </section>
+  <section class="view settings" id="view-settings" hidden>
+    <div class="group">
+      <h2 class="gh">Companies <span class="gc" id="cc"></span></h2>
+      <div class="addrow"><input id="ci" type="text" placeholder="Search or add a company or product" aria-label="Search or add a company or product" maxlength="40"><button class="add" id="ca" type="button">Add</button></div>
+      <p class="hint" id="chint" aria-live="polite"></p>
+      <ul class="chips" id="cl"></ul>
+      <button class="reset" id="cr" type="button">Reset companies</button>
+    </div>
+    <div class="group">
+      <h2 class="gh">Activities <span class="gc" id="hc"></span></h2>
+      <div class="addrow"><input id="hi" type="text" placeholder="Search or add a hobby or activity" aria-label="Search or add a hobby or activity" maxlength="40"><button class="add" id="ha" type="button">Add</button></div>
+      <p class="hint" id="hhint" aria-live="polite"></p>
+      <ul class="chips" id="hl"></ul>
+      <button class="reset" id="hr" type="button">Reset activities</button>
+    </div>
+  </section>
+</main>
+<script>
+const companies=["Strava", "Airbnb", "Uber", "Spotify", "Duolingo", "Tinder", "Venmo", "Robinhood", "Etsy", "Zillow", "LinkedIn", "Calendly", "Canva", "Figma", "Slack", "Discord", "Twitch", "Shopify", "Stripe", "GitHub", "Pinterest", "Reddit", "Wikipedia", "Goodreads", "Letterboxd", "Untappd", "AllTrails", "Waze", "Bumble", "OpenTable", "Zocdoc", "Kickstarter", "GoFundMe", "Patreon", "Substack", "Cameo", "TikTok", "Instagram", "BeReal", "Peloton", "MasterClass", "Coursera", "Khan Academy", "Wordle", "Kayak", "Turo", "Carvana", "TurboTax", "Coinbase", "Zapier", "Typeform", "Airtable", "Trello", "Notion", "Calm", "Whoop", "Oura", "Depop", "Poshmark", "StockX", "Instacart", "DoorDash", "Toast", "Square", "Gusto", "Yelp", "Netflix", "Shazam", "Pokémon Go", "Tamagotchi", "Linktree", "Glassdoor", "Eventbrite", "Meetup", "Nextdoor", "Craigslist", "Zoom", "Dropbox", "Mint", "Google Maps", "Amazon", "Google Docs", "Gmail", "YouTube", "Snapchat", "WhatsApp", "Telegram", "Signal", "Facebook", "Twitter", "Tumblr", "Medium", "Quora", "Stack Overflow", "Uber Eats", "Grubhub", "Lyft", "Lime", "Zipcar", "Expedia", "Booking.com", "Tripadvisor", "Hopper", "Skyscanner", "Couchsurfing", "Vrbo", "Hinge", "Grindr", "Match", "eHarmony", "Clubhouse", "Mastodon", "Bluesky", "Threads", "Vine", "Cash App", "PayPal", "Wise", "Revolut", "Chime", "Klarna", "Affirm", "Acorns", "Betterment", "Wealthfront", "Credit Karma", "Plaid", "QuickBooks", "FreshBooks", "Squarespace", "Wix", "WordPress", "Webflow", "Mailchimp", "HubSpot", "Salesforce", "Asana", "Monday.com", "Basecamp", "Jira", "Linear", "Miro", "Loom", "Doodle", "Evernote", "Todoist", "Obsidian", "Roam Research", "Anki", "Quizlet", "Brilliant", "Codecademy", "Udemy", "Skillshare", "Babbel", "Rosetta Stone", "Headspace", "Noom", "MyFitnessPal", "Fitbit", "Garmin", "Zwift", "Runkeeper", "ClassPass", "Mindbody", "Glossier", "Warby Parker", "Casper", "Allbirds", "Away", "Harry's", "Dollar Shave Club", "Blue Apron", "HelloFresh", "Thrive Market", "Costco", "IKEA", "TaskRabbit", "Thumbtack", "Angi", "Rover", "Wag", "Chewy", "BarkBox", "Redfin", "Opendoor", "Rocket Mortgage", "Lemonade", "Teladoc", "GoodRx", "Talkspace", "23andMe", "Ancestry", "Apple Music", "SoundCloud", "Bandcamp", "Pandora", "Last.fm", "Genius", "Audible"];
+const hobbies=["rock climbing", "sourdough baking", "pottery", "skateboarding", "hiking", "knitting", "pickleball", "kayaking", "woodworking", "origami", "home cooks", "bouldering", "journaling", "calligraphy", "5K runners", "yoga", "fishing", "board games", "salsa dancing", "karaoke", "zine makers", "tabletop RPGs", "miniature painting", "beekeeping", "juggling", "archery", "swimming", "kombucha brewing", "music composing", "geocaching", "rowing", "fencing", "hot sauce fermenting", "trivia night", "longboarding", "wood carving", "plant parents", "dog owners", "vinyl collecting", "pickup basketball", "open mic night", "speedcubing", "drone flying", "amateur astronomy", "tennis", "cooking for one", "knife sharpening", "trail running", "canoeing", "whitewater rafting", "scuba diving", "sailing", "windsurfing", "wakeboarding", "fly fishing", "ice fishing", "badminton", "volleyball", "beach volleyball", "pickup soccer", "rugby", "ultimate frisbee", "baseball", "kickball", "dodgeball", "hockey", "roller derby", "BMX", "road cycling", "bike commuting", "running", "triathlon", "cross-country skiing", "downhill skiing", "snowshoeing", "ice climbing", "mountaineering", "slacklining", "beachcombing", "tide pooling", "CrossFit", "powerlifting", "calisthenics", "boxing", "Muay Thai", "Brazilian jiu-jitsu", "karate", "wrestling", "capoeira", "qigong", "Zumba", "barre", "stretching", "breathwork", "cold plunges", "walking meetups", "rucking", "jump rope", "aerial silks", "trampoline", "crocheting", "cross-stitch", "weaving", "macrame", "tie-dye", "block printing", "linocut", "oil painting", "gouache", "figure drawing", "comic drawing", "digital illustration", "pixel art", "bullet journaling", "collage", "paper quilling", "bookbinding", "whittling", "wood turning", "metalworking", "welding", "jewelry making", "leatherworking", "soap making", "glassblowing", "mosaic", "dollhouse miniatures", "laser cutting", "thrift flipping", "clay modeling", "mural painting", "ceramics", "piano players", "violin players", "bassists", "trumpet players", "harmonica players", "mandolin players", "choir", "songwriting", "beat making", "stand-up comedy", "improv comedy", "community theater", "ventriloquism", "puppetry", "swing dancing", "hip hop dance", "line dancing", "ballet", "K-pop dance covers", "poetry slams", "spoken word", "radio hosting", "sound design", "cake decorating", "pastry making", "pizza making", "sushi making", "ramen cooking", "barbecue", "grilling", "kimchi making", "wine tasting", "mead making", "pour-over coffee", "latte art", "cheese making", "chocolate making", "ice cream making", "pickling", "potluck cooking", "recipe testing", "food truck chasing", "cocktail making", "mixology", "craft beer tasting", "wine pairing", "spice blending", "vegan cooking", "container gardening", "houseplants", "bonsai", "composting", "permaculture", "herb gardening", "urban farming", "backyard chickens", "birdhouse building", "butterfly gardening", "tree planting", "hydroponics", "DIY furniture", "interior decorating", "vintage furniture hunting", "seed saving", "wildlife photography", "checkers", "poker", "bridge", "miniature wargaming", "Magic: The Gathering", "Pokémon cards", "jigsaw puzzles", "sudoku", "escape rooms", "speedrunning", "retro gaming", "game modding", "pinball", "mahjong", "dominoes", "murder mystery parties", "geoguessing", "fantasy football", "web development", "robotics", "Arduino projects", "soldering", "ham radio", "telescope making", "CAD design", "machine learning side projects", "cybersecurity CTFs", "open source contributing", "home automation", "synthesizer building", "citizen science", "history research", "reading", "creative writing", "poetry writing", "screenwriting", "blogging", "translating", "sign language", "debate", "language exchange", "flashcards", "philosophy discussion", "road trips", "van life", "pub crawls", "urban exploring", "museum visits", "concert going", "live music hunting", "film festivals", "cinema clubs", "binge watching", "reality TV", "attending games", "mentoring", "tutoring", "neighborhood cleanups", "blood donation", "animal shelter volunteering", "dog training", "cat fostering", "horseback riding", "falconry", "pet photography", "stamp collecting", "sneaker collecting", "vintage toys", "action figures", "Hot Wheels collecting", "vintage clothing", "watch collecting", "sticker collecting", "fossil hunting", "metal detecting", "film photography", "pressed flowers", "seashell collecting", "sports memorabilia", "book collecting", "rare plants", "car meets", "scooter riding", "e-bike building", "go-karting", "off-roading", "RV camping", "flying small planes", "skydiving", "paragliding", "train spotting", "model rockets", "RC cars", "model trains", "minimalism", "decluttering", "budgeting", "side hustles", "garage sales", "personal finance", "party planning", "dinner parties", "book swaps"];
+const defaultCompanies=companies.slice(),defaultHobbies=hobbies.slice();
+const LISTS_V=3;
+function loadList(arr,saved,v,need,merge){
+  if(!Array.isArray(saved)||!saved.length||!saved.every(x=>typeof x==="string"))return;
+  if(v>=need){arr.splice(0,arr.length,...saved);return;}
+  if(!merge)return;
+  const have=new Set(saved.map(x=>x.toLowerCase()));
+  arr.splice(0,arr.length,...saved,...arr.filter(x=>!have.has(x.toLowerCase())));
+}
+try{
+  const cl=JSON.parse(localStorage.getItem("customLists")||"null");
+  if(cl){loadList(companies,cl.c,cl.v,2,true);loadList(hobbies,cl.h,cl.v,3,false);}
+}catch(e){}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const c=document.getElementById("company"),h=document.getElementById("hobby");
+const saveBtn=document.getElementById("save"),list=document.getElementById("list"),empty=document.getElementById("empty"),count=document.getElementById("count");
+let saved=[];
+try{saved=JSON.parse(localStorage.getItem("savedIdeas")||"[]");if(!Array.isArray(saved))saved=[];}catch(e){saved=[];}
+function persist(){try{localStorage.setItem("savedIdeas",JSON.stringify(saved));}catch(e){}}
+const isSaved=()=>saved.some(i=>i.c===c.textContent&&i.h===h.textContent);
+function sync(){if(spinning){saveBtn.disabled=true;return;}const s=isSaved();saveBtn.disabled=s;saveBtn.textContent=s?"Saved":"Save";}
+function render(){
+  list.textContent="";
+  saved.forEach((it,idx)=>{
+    const li=document.createElement("li");
+    const t=document.createElement("span");t.textContent=it.c+" for "+it.h;
+    const b=document.createElement("button");b.type="button";b.className="rm";b.textContent="Remove";
+    b.setAttribute("aria-label","Remove "+it.c+" for "+it.h);
+    b.addEventListener("click",()=>{saved.splice(idx,1);persist();render();sync();});
+    li.append(t,b);list.appendChild(li);
+  });
+  count.textContent=saved.length;
+  empty.hidden=saved.length>0;
+}
+let spinning=false;
+const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rollBtn=document.getElementById("roll");
+function spin(el,list,final,ms){
+  return new Promise(done=>{
+    el.classList.remove("land");el.classList.add("spinning");
+    const t=setInterval(()=>{el.textContent=pick(list);},75);
+    setTimeout(()=>{clearInterval(t);el.classList.remove("spinning");el.textContent=final;void el.offsetWidth;el.classList.add("land");done();},ms);
+  });
+}
+function roll(){
+  if(spinning)return;
+  const fc=pick(companies),fh=pick(hobbies);
+  if(reduce){c.textContent=fc;h.textContent=fh;sync();return;}
+  spinning=true;rollBtn.disabled=true;saveBtn.disabled=true;
+  Promise.all([spin(c,companies,fc,900),spin(h,hobbies,fh,1450)]).then(()=>{spinning=false;rollBtn.disabled=false;sync();});
+}
+let prevView="roll";
+function show(name){
+  if(name!=="settings")prevView=name;
+  ["roll","saved","settings"].forEach(n=>{document.getElementById("view-"+n).hidden=n!==name;});
+  ["roll","saved"].forEach(n=>document.getElementById("tab-"+n).setAttribute("aria-selected",n===name));
+  document.getElementById("tab-settings").setAttribute("aria-pressed",name==="settings");
+}
+document.getElementById("roll").addEventListener("click",roll);
+saveBtn.addEventListener("click",()=>{if(!isSaved()){saved.unshift({c:c.textContent,h:h.textContent});persist();render();sync();}});
+document.getElementById("tab-roll").addEventListener("click",()=>show("roll"));
+document.getElementById("tab-saved").addEventListener("click",()=>show("saved"));
+document.getElementById("tab-settings").addEventListener("click",()=>show(document.getElementById("view-settings").hidden?"settings":prevView));
+function persistLists(){try{localStorage.setItem("customLists",JSON.stringify({v:LISTS_V,c:companies,h:hobbies}));}catch(e){}}
+const groups=[
+  {arr:companies,def:defaultCompanies,list:"cl",input:"ci",add:"ca",reset:"cr",count:"cc",hint:"chint"},
+  {arr:hobbies,def:defaultHobbies,list:"hl",input:"hi",add:"ha",reset:"hr",count:"hc",hint:"hhint"}
+];
+function renderSettings(){
+  groups.forEach(g=>{
+    const q=document.getElementById(g.input).value.trim().toLowerCase();let shown=0,exact=false;
+    const ul=document.getElementById(g.list);ul.textContent="";
+    g.arr.forEach(item=>{
+      const lc=item.toLowerCase();
+      if(lc===q)exact=true;
+      if(q&&!lc.includes(q))return;
+      shown++;
+      const idx=g.arr.indexOf(item);
+      const li=document.createElement("li");li.className="chip";
+      const t=document.createElement("span");t.textContent=item;
+      const b=document.createElement("button");b.type="button";b.textContent="×";
+      b.setAttribute("aria-label","Remove "+item);
+      b.disabled=g.arr.length<=1;
+      b.addEventListener("click",()=>{if(g.arr.length>1){g.arr.splice(idx,1);persistLists();renderSettings();}});
+      li.append(t,b);ul.appendChild(li);
+    });
+    document.getElementById(g.count).textContent=q?"("+shown+" of "+g.arr.length+")":"("+g.arr.length+")";
+    const hint=document.getElementById(g.hint);
+    hint.textContent=!q?"":exact?"Already in your list.":shown?"Not in the list? Press Add to create it.":"No match. Press Add to create it.";
+    document.getElementById(g.add).disabled=!q||exact;
+  });
+}
+groups.forEach(g=>{
+  const input=document.getElementById(g.input);
+  const add=()=>{
+    const v=input.value.trim();
+    if(v&&!g.arr.some(x=>x.toLowerCase()===v.toLowerCase())){g.arr.unshift(v);persistLists();renderSettings();}
+    input.value="";renderSettings();
+  };
+  document.getElementById(g.add).addEventListener("click",add);
+  input.addEventListener("input",renderSettings);
+  input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();add();}});
+  document.getElementById(g.reset).addEventListener("click",()=>{g.arr.splice(0,g.arr.length,...g.def);persistLists();renderSettings();});
+});
+roll();
+render();
+renderSettings();
+</script>
+</body>
+</html>
