@@ -1,6 +1,6 @@
 # Spinoff
 
-A slot-machine project idea generator. Hit **Roll** and get a random company or product paired with a random hobby or activity, like **Strava for rock climbing** or **Calendly for beekeeping**. Save the ones you like and come back to them later.
+A slot-machine project idea generator. Hit **Roll** and get a random company or product paired with a random hobby or activity, like **Strava for rock climbing** or **Calendly for book clubs**. Save the ones you like and come back to them later.
 
 ## Features
 
@@ -38,12 +38,13 @@ There is nothing to install or build. It's a single static file.
 
 ```
 spinoff/
-├── index.html   # the whole app
-└── README.md
+├── README.md
+└── index.html   # the whole app
 ```
 
 ## Ideas for later
 
 - Lock one side (company or activity) and re-roll only the other
+- Filtering for type of activity or company
 - Copy or export saved ideas
 - Sync saved ideas across devices
