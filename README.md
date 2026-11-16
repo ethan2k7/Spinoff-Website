@@ -41,6 +41,8 @@ spinoff/
 ├── README.md
 └── index.html   # the whole app
 ```
+## UPDATES
+11/15/26 - Added info popup explaining users premise of the app and how to use the functions
 
 ## Ideas for later
 
